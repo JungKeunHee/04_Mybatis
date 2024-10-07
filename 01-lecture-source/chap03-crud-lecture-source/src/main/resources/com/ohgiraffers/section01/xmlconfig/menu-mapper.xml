@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MenuMapper">
+
+    <!-- comment.
+            우리가 JDBC 를 사용해서 전체를 조회 했을 때
+            수많은 setter 와 getter 를 사용해서 힘들게
+            객체 값을 집어넣었었다.
+            하지만, MyBatis 는 JDBC 를 더욱 간편하게 사용
+            할 수 있게 해주는 프레임워크 이기 때문에
+            이러한 하드코딩 문제를 resultMap 이라는 것으로
+            해결할 수 있다.
+     -->
+
+    <!-- 결과 매핑 : 데이터베이스에 컬럼에 해당하는 값과 필드값을 매핑시켜준다. -->
+    <resultMap id="menuResultMap" type="com.ohgiraffers.section01.xmlconfig.model.dto.MenuDTO">
+        <id property="menuCode" column="MENU_CODE"/>
+        <result property="menuName" column="MENU_NAME"/>
+        <result property="menuPrice" column="MENU_PRICE"/>
+        <result property="categoryCode" column="CATEGORY_CODE"/>
+        <result property="orderableStatus" column="ORDERABLE_STATUS"/>
+    </resultMap>
+
+    <select id="selectAllMenu" resultMap="menuResultMap">
+        SELECT
+            MENU_CODE,
+            MENU_NAME,
+            MENU_PRICE,
+            CATEGORY_CODE,
+            ORDERABLE_STATUS
+        FROM
+            TBL_MENU
+        WHERE
+            ORDERABLE_STATUS = 'Y'
+        ORDER BY
+            MENU_CODE
+    </select>
+</mapper>
