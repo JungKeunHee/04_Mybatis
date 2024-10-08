@@ -19,4 +19,9 @@ public class MenuDAO {
 
     }
 
+    public MenuDTO selectMenuByMenuCode(SqlSession sqlSession, int code) {
+
+        return sqlSession.selectOne("MenuMapper.selectMenuByCode", code);
+
+    }
 }

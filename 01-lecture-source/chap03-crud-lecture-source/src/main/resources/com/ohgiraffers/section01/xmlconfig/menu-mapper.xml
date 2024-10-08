@@ -37,4 +37,21 @@
         ORDER BY
             MENU_CODE
     </select>
+
+    <!-- jdbc 에서 했던 ?(플레이스 홀더) 개념을 #{변수명} 이렇게 나타낼 수 있다.  -->
+    <select id="selectMenuByCode" parameterType="_int" resultMap="menuResultMap">
+        SELECT
+            MENU_CODE,
+            MENU_NAME,
+            MENU_PRICE,
+            CATEGORY_CODE,
+            ORDERABLE_STATUS
+        FROM
+            TBL_MENU
+        WHERE
+            ORDERABLE_STATUS = 'Y'
+            AND
+            MENU_CODE = #{code}
+    </select>
+
 </mapper>

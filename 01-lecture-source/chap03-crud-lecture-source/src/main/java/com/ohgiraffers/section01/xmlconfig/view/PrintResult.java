@@ -17,4 +17,29 @@ public class PrintResult {
 
         System.out.println("=================================================");
     }
+
+    public void printErrorMessage(String errorCode) {
+
+        String errorMessage = "";
+
+        switch(errorCode){
+            case "selectList":
+                errorMessage = "메뉴 전체 조회에 실패하셨습니다...";
+                break;
+            case "selectOne":
+                errorMessage = "요청하신 메뉴코드에 대한 조회가 실패하셨습니다...";
+                break;
+
+        }
+
+        System.out.println(errorMessage);
+
+    }
+
+    public void printMenu(MenuDTO menu) {
+
+        System.out.println(menu.getMenuCode() + " 번 조회 결과입니다.");
+        System.out.println(menu);
+        System.out.println("=====================================================");
+    }
 }

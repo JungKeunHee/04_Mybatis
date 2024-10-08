@@ -39,4 +39,19 @@ public class MenuService {
     }
 
 
+    public MenuDTO selectMenuByMenuCode(int code) {
+
+        // 1. SqlSession 생성
+        SqlSession sqlSession = getSqlSession();
+
+        // 2. DAO 계층의 메소드 호출하기 - session 과 추가적인 전달 값 있으면 전달
+        MenuDTO menu = menuDAO.selectMenuByMenuCode(sqlSession, code);
+
+        // 3. 사용한 통로 닫아주기
+        sqlSession.close();
+
+        return menu;
+
+
+    }
 }
