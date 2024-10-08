@@ -76,6 +76,48 @@ public class MenuController {
         newMenu.setMenuPrice(menuPrice);
         newMenu.setCategoryCode(categoryCode);
 
-        menuService.insertNewMenu(newMenu);
+        if(menuService.insertNewMenu(newMenu)){
+            printResult.printSuccessMessage("insert");
+        } else {
+            printResult.printErrorMessage("insertError");
+        }
+
     }
+
+    public void modifyMenu(Map<String, String> parameter) {
+
+        int menuCode = Integer.parseInt(parameter.get("menuCode"));
+        String menuName = parameter.get("menuName");
+        int menuPrice = Integer.parseInt(parameter.get("menuPrice"));
+        int categoryCode = Integer.parseInt(parameter.get("categoryCode"));
+
+        MenuDTO modifyMenu = new MenuDTO();
+        modifyMenu.setMenuCode(menuCode);
+        modifyMenu.setMenuName(menuName);
+        modifyMenu.setMenuPrice(menuPrice);
+        modifyMenu.setCategoryCode(categoryCode);
+
+        if(menuService.modifyMenu(modifyMenu)){
+            printResult.printSuccessMessage("update");
+        } else {
+            printResult.printErrorMessage("updateError");
+        }
+
+    }
+
+    public void deleteMenu(Map<String, String> parameter) {
+
+        int deleteMenuCode = Integer.parseInt(parameter.get("menuCode"));
+
+        MenuDTO menu = new MenuDTO();
+        menu.setMenuCode(deleteMenuCode);
+
+        if(menuService.deleteMenu(menu)){
+            printResult.printSuccessMessage("delete");
+        } else {
+            printResult.printErrorMessage("delete");
+        }
+
+    }
+
 }

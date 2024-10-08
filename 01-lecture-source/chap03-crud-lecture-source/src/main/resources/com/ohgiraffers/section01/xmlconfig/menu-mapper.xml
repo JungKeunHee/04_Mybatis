@@ -54,4 +54,27 @@
             MENU_CODE = #{code}
     </select>
 
+    <!-- comment. insert, delete, update 의 경우에는 DB 에 영향을 미치게 되면 int 형으로
+            결과를 반환한다.
+            그리고 파라미터로 전달 된 newMenu를 DTO 의 필드명으로 값을
+            바인딩 해주어야 한다.
+            -->
+    <insert id="insertNewMenu" parameterType="com.ohgiraffers.section01.xmlconfig.model.dto.MenuDTO">
+        INSERT INTO TBL_MENU(MENU_NAME, MENU_PRICE, CATEGORY_CODE, ORDERABLE_STATUS)
+        VALUES(#{menuName}, #{menuPrice}, #{categoryCode}, 'Y')
+    </insert>
+
+    <update id="updateMenu" parameterType="com.ohgiraffers.section01.xmlconfig.model.dto.MenuDTO">
+        UPDATE TBL_MENU
+            SET MENU_NAME = #{menuName}, MENU_PRICE = #{menuPrice}, CATEGORY_CODE = #{categoryCode}
+        WHERE
+            MENU_CODE = #{menuCode}
+    </update>
+
+    <delete id="deleteMenu" parameterType="com.ohgiraffers.section01.xmlconfig.model.dto.MenuDTO">
+        DELETE FROM TBL_MENU
+        WHERE
+            MENU_CODE = #{menuCode}
+
+    </delete>
 </mapper>

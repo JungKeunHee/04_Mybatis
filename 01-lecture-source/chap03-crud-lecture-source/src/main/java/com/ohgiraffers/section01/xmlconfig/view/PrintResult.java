@@ -29,7 +29,16 @@ public class PrintResult {
             case "selectOne":
                 errorMessage = "요청하신 메뉴코드에 대한 조회가 실패하셨습니다...";
                 break;
+            case "insertError":
+                errorMessage = "신규 메뉴 추가에 실패하셨습니다...";
+                break;
 
+            case "updateError":
+                errorMessage = "메뉴 수정이 실패하셨습니다...";
+                break;
+
+            case "delete":
+                errorMessage = "메뉴 삭제에 실패하셨습니다...";
         }
 
         System.out.println(errorMessage);
@@ -41,5 +50,23 @@ public class PrintResult {
         System.out.println(menu.getMenuCode() + " 번 조회 결과입니다.");
         System.out.println(menu);
         System.out.println("=====================================================");
+    }
+
+    public void printSuccessMessage(String successCode) {
+
+        String successMessage = "";
+        switch(successCode){
+            case "insert":
+                successMessage = "신규 메뉴 등록 성공";
+                break;
+            case "update":
+                successMessage = "메뉴 수정 성공";
+                break;
+            case "delete":
+                successMessage = "메뉴 삭제 성공";
+        }
+
+        System.out.println(successMessage);
+
     }
 }

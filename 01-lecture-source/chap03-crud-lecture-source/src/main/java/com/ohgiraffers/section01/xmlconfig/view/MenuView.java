@@ -53,8 +53,10 @@ public class MenuView {
                     menuController.insertMenu(inputMenu());
                     break;
                 case 4:
+                    menuController.modifyMenu(inputModifyMenu());
                     break;
                 case 5:
+                    menuController.deleteMenu(inputDeleteMenu());
                     break;
                 default:
                     System.out.println("메뉴에 맞는 번호를 눌러주세요...");
@@ -88,7 +90,7 @@ public class MenuView {
         System.out.print("가격을 입력해주세요 : ");
         String menuPrice = sc.nextLine();
 
-        System.out.println("카테고리 번호를 입력해주세요 : ");
+        System.out.print("카테고리 번호를 입력해주세요 : ");
         String categoryCode = sc.nextLine();
 
         Map<String, String> parameter = new HashMap<>();
@@ -97,6 +99,44 @@ public class MenuView {
         parameter.put("categoryCode", categoryCode);
 
         return parameter;
+    }
+
+    private static Map<String, String> inputModifyMenu () {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("수정할 메뉴 코드를 입력해주세요 : ");
+        String menuCode = sc.nextLine();
+
+        System.out.print("수정할 메뉴 이름을 입력해주세요 : ");
+        String menuName = sc.nextLine();
+
+        System.out.print("수정할 메뉴 가격을 입력해주세요 : ");
+        String menuPrice = sc.nextLine();
+
+        System.out.print("수정할 카테고리 번호를 입력해주세요 : ");
+        String categoryCode = sc.nextLine();
+
+        Map<String, String> parameter = new HashMap<>();
+        parameter.put("menuCode", menuCode);
+        parameter.put("menuName", menuName);
+        parameter.put("menuPrice", menuPrice);
+        parameter.put("categoryCode", categoryCode);
+
+        return parameter;
+
+    }
+
+    private static Map<String, String> inputDeleteMenu () {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("삭제할 메뉴 코드를 입력해주세요 : ");
+        String menuCode = sc.nextLine();
+
+        Map<String, String> parameter = new HashMap<>();
+        parameter.put("menuCode", menuCode);
+
+        return parameter;
+
     }
 
 }
