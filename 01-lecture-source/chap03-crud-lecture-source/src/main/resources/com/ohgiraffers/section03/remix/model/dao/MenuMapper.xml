@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+    comment.
+        javaconfig 의 장점과 xmlconfig 의 장점을 결합한 remix 에서는
+        중요하게 신경써야 할 4가지가 있다.
+        1. dao 인터페이스와 xml 파일은 동일한 경로에 위치해야 한다.
+        2. mapper 의 namespace 속성을 dao 인터페이스의 풀네임으로 지정해야 한다.
+        3. dao 인터페이스의 이름과 xml 파일의 이름이 동일해야 한다.
+        4. dao 에 작성한 메소드의 이름과 SQL 문의 id 를 일치시켜야 한다.
+ -->
+
+<mapper namespace="com.ohgiraffers.section03.remix.model.dao.MenuMapper">
+
+    <resultMap id="menuResultMap" type="com.ohgiraffers.section03.remix.model.dto.MenuDTO">
+        <id property="menuCode" column="MENU_CODE"/>
+        <result property="menuName" column="MENU_NAME"/>
+        <result property="menuPrice" column="MENU_PRICE"/>
+        <result property="categoryCode" column="CATEGORY_CODE"/>
+        <result property="orderableStatus" column="ORDERABLE_STATUS"/>
+
+    </resultMap>
+
+    <select id="selectAllMenu" resultMap="menuResultMap">
+
+        SELECT
+            *
+        FROM
+            TBL_MENU
+        WHERE
+            ORDERABLE_STATUS = 'Y'
+        ORDER BY
+            MENU_CODE
+
+    </select>
+
+    <select id="selectMenuCode" resultMap="menuResultMap">
+
+        SELECT
+            *
+        FROM
+            TBL_MENU
+        WHERE
+            MENU_CODE = #{ menuCode }
+
+    </select>
+
+    <insert id="insertMenu" parameterType="com.ohgiraffers.section03.remix.model.dto.MenuDTO">
+        INSERT INTO TBL_MENU(MENU_NAME, MENU_PRICE, CATEGORY_CODE, ORDERABLE_STATUS)
+        VALUES (#{ menuName }, #{ menuPrice }, #{ categoryCode }, 'Y')
+    </insert>
+
+    <update id="updateMenu" parameterType="com.ohgiraffers.section03.remix.model.dto.MenuDTO">
+        UPDATE TBL_MENU
+        SET
+            MENU_NAME = #{menuName},
+            MENU_PRICE = #{menuPrice},
+            CATEGORY_CODE = #{categoryCode}
+        WHERE
+            MENU_CODE = #{menuCode}
+    </update>
+
+    <delete id="deleteMenu" parameterType="com.ohgiraffers.section03.remix.model.dto.MenuDTO">
+        DELETE FROM TBL_MENU
+        WHERE MENU_CODE = #{menuCode}
+
+    </delete>
+</mapper>
