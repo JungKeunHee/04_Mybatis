@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="model.dao.MenuMapper">
+
+    <resultMap id="MenuMapper" type="MenuDTO">
+        <id property="menuCode" column="MENU_CODE"/>
+        <result property="menuName" column="MENU_NAME"/>
+        <result property="menuPrice" column="MENU_PRICE"/>
+        <result property="categoryCode" column="CATEGORY_CODE"/>
+        <result property="orderableStatus" column="ORDERABLE_STATUS"/>
+    </resultMap>
+    
+    <select id="selectAllMenu" resultMap="MenuMapper">
+        SELECT
+            *
+        FROM
+            TBL_MENU
+
+    </select>
+
+    <select id="selectByMenuPrice" parameterType="hashmap" resultMap="MenuMapper">
+        SELECT
+            *
+        FROM
+            TBL_MENU
+        WHERE
+            ORDERABLE_STATUS
+            <if test="price gte 0 and price lte 10000">
+                AND MENU_PRICE BETWEEN 0 AND #{menuPrice}
+            </if>
+            <if test="price gt 10000 and price lte 20000">
+            AND MENU_PRICE BETWEEN 10000 AND #{menuPrice}
+            </if>
+
+    </select>
+</mapper>
