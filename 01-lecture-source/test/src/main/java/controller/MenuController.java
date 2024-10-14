@@ -87,4 +87,18 @@ public class MenuController {
             printView.selectAllError("deleteError");
         }
     }
+
+    public void selectRandomMenu(List<Integer> randomMenu) {
+
+        Map<String, List<Integer>> menuList = new HashMap<>();
+        menuList.put("selectRandomMenu", randomMenu);
+
+        List<MenuDTO> randomMenuList = menuService.selectRandomMenu(menuList);
+
+        if (randomMenuList != null && randomMenuList.size() > 0){
+            printView.selectAllMenu(randomMenuList);
+        } else {
+            printView.selectAllError("selectRandomMenuError");
+        }
+    }
 }

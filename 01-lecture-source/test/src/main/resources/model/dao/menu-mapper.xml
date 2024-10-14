@@ -71,4 +71,17 @@
         DELETE FROM TBL_MENU
         WHERE MENU_CODE = #{menuCode}
     </delete>
+
+    <select id="selectRandomMenu" parameterType="hashmap" resultMap="MenuMapper">
+        SELECT
+            *
+        FROM
+            TBL_MENU
+        WHERE
+            MENU_CODE IN
+        <foreach collection="selectRandomMenu" item="menuList" open="(" close=")" separator=",">
+            #{menuList}
+        </foreach>
+
+    </select>
 </mapper>

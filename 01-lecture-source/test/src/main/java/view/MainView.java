@@ -3,9 +3,7 @@ package view;
 import controller.MenuController;
 import model.dto.MenuDTO;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class MainView {
 
@@ -22,6 +20,7 @@ public class MainView {
             System.out.println("3. 신규 메뉴 등록하기");
             System.out.println("4. 원하는 부분만 메뉴 or 전체 메뉴 수정하기");
             System.out.println("5. 메뉴 삭제하기");
+            System.out.println("6. 랜덤한 메뉴 5개 조회하기");
             System.out.println("0. 프로그램 종료");
             System.out.println("=====================================================");
 
@@ -44,9 +43,12 @@ public class MainView {
                 case 5:
                     menuController.deleteMenu(inputDeleteMenu());
                     break;
+                case 6:
+                    menuController.selectRandomMenu(inputRandomMenu());
+                    break;
                 case 0:
                     System.out.println("프로그램을 종료합니다...");
-                    System.exit(no);
+                    System.exit(0);
                     return;
                 default:
                     System.out.println("메뉴에 맞는 번호를 눌러주세요...");
@@ -54,6 +56,22 @@ public class MainView {
             }
 
         } while (true);
+    }
+
+    private static List<Integer> inputRandomMenu() {
+
+        Set<Integer> set = new HashSet<>();
+
+
+        while(set.size() < 5){
+            int randomCode = (int)(Math.random() * 24) + 1;
+            set.add(randomCode);
+        }
+
+        List<Integer> menuList = new ArrayList<>(set);
+        Collections.sort(menuList);
+
+        return menuList;
     }
 
     private static Map<String, String> inputPrice(){

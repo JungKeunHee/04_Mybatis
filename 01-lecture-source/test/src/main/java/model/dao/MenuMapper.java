@@ -16,4 +16,6 @@ public interface MenuMapper {
     int modifyMenu(Map<String, String> updateMenu);
 
     int deleteMenu(Map<String, String> deleteMenu);
+
+    List<MenuDTO> selectRandomMenu(Map<String, List<Integer>> randomMenu);
 }

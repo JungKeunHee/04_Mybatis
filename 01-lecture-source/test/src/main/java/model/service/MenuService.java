@@ -89,4 +89,18 @@ public class MenuService {
         }
         return result > 0 ? true : false;
     }
+
+    public List<MenuDTO> selectRandomMenu(Map<String, List<Integer>> randomMenu) {
+
+        SqlSession sqlSession = getSqlSession();
+
+        menuMapper = sqlSession.getMapper(MenuMapper.class);
+
+        List<MenuDTO> menuList = menuMapper.selectRandomMenu(randomMenu);
+
+        sqlSession.close();
+
+        return menuList;
+
+    }
 }

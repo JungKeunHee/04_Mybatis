@@ -30,6 +30,9 @@ public class PrintView {
             case "deleteError":
                 System.out.println("메뉴 삭제에 실패하였습니다...");
                 break;
+            case "selectRandomMenuError":
+                System.out.println("메뉴 랜덤 조회에 실패하였습니다...");
+                break;
         }
 
     }
@@ -63,4 +66,6 @@ public class PrintView {
         }
 
     }
+
+
 }
