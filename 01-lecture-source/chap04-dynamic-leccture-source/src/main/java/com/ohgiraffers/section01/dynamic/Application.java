@@ -1,5 +1,6 @@
 package com.ohgiraffers.section01.dynamic;
 
+import com.ohgiraffers.common.MenuDTO;
 import com.ohgiraffers.common.SearchCriteria;
 
 import java.util.*;
@@ -66,8 +67,10 @@ public class Application {
                     menuService.searchMenuByCodeOrSearchAll(inputAllOrOne());
                     break;
                 case 2:
+                    menuService.searchMenuByNameOrCategory(inputSearchCriteriaMap());
                     break;
                 case 3:
+                    menuService.modifyMenu(inputChange());
                     break;
                 case 9:
                     System.out.println("trim 서브메뉴 종료...");
@@ -76,6 +79,62 @@ public class Application {
             }
         }while(true);
 
+    }
+
+    private static Map<String,Object> inputChange() {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("변경 할 메뉴 코드를 입력해주세요 : ");
+        int code = sc.nextInt();
+        System.out.print("변경 할 메뉴 이름을 입력해주세요 : ");
+        sc.nextLine();
+        String name = sc.nextLine();
+
+        System.out.print("변경할 카테고리 코드를 입력해주세요 : ");
+        int categoryCode = sc.nextInt();
+
+        System.out.print("판매여부 결정해주세요(Y/N) : ");
+        sc.nextLine();
+        String orderableStatus = sc.nextLine().toUpperCase();
+
+        Map<String, Object> criteria = new HashMap<>();
+
+        criteria.put("code", code);
+        criteria.put("name", name);
+        criteria.put("category", categoryCode);
+        criteria.put("orderableStatus", orderableStatus);
+
+        return criteria;
+
+    }
+
+    private static Map<String, Object> inputSearchCriteriaMap() {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("검색 조건(category or name or both or null) : ");
+        String condition = sc.nextLine();
+
+        Map<String, Object> criteria = new HashMap<>();
+        if ("category".equals(condition)){
+            System.out.print("검색할 카테고리 코드를 입력해주세요 : ");
+            int categoryCode = sc.nextInt();
+            criteria.put("categoryValue", categoryCode);
+        } else if ("name".equals(condition)){
+            System.out.print("검색할 메뉴 이름을 입력해주세요 : ");
+            String nameValue = sc.nextLine();
+            criteria.put("nameValue", nameValue);
+        } else if ("both".equals(condition)) {
+            System.out.print("검색할 메뉴 이름을 입력해주세요 : ");
+            String nameValue = sc.nextLine();
+            System.out.print("검색할 카테고리 코드를 입력해주세요 : ");
+            int categoryCode = sc.nextInt();
+            criteria.put("categoryValue", categoryCode);
+            criteria.put("nameValue", nameValue);
+        } else {
+            System.out.println("검색할 조건이 없어서 전체조회를 시작합니다...");
+        }
+
+        return criteria;
     }
 
     private static SearchCriteria inputAllOrOne() {

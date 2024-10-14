@@ -113,4 +113,60 @@ public class MenuService {
         sqlSession.close();
 
     }
+
+    public void searchMenuByCodeOrSearchAll(SearchCriteria searchCriteria) {
+
+        SqlSession sqlSession = getSqlSession();
+        mapper = sqlSession.getMapper(DynamicSqlMapper.class);
+
+        List<MenuDTO> menuList = mapper.searchMenuByCodeOrSearchAll(searchCriteria);
+
+        if(menuList != null && menuList.size() > 0){
+            for(MenuDTO menu : menuList){
+                System.out.println(menu);
+            }
+        } else {
+            System.out.println("검색 결과가 없습니다...");
+        }
+
+        sqlSession.close();
+
+    }
+
+    public void searchMenuByNameOrCategory(Map<String, Object> criteria) {
+
+        SqlSession sqlSession = getSqlSession();
+        mapper = sqlSession.getMapper(DynamicSqlMapper.class);
+
+        List<MenuDTO> menuList = mapper.searchMenuByNameOrCategory(criteria);
+
+        if(menuList != null && menuList.size() > 0){
+            for(MenuDTO menu : menuList){
+                System.out.println(menu);
+            }
+        } else {
+            System.out.println("검색 결과가 없습니다...");
+        }
+
+        sqlSession.close();
+
+    }
+
+    public void modifyMenu(Map<String, Object> criteria) {
+
+        SqlSession sqlSession = getSqlSession();
+        mapper = sqlSession.getMapper(DynamicSqlMapper.class);
+
+        int result = mapper.modifyMenu(criteria);
+
+        if (result > 0){
+            sqlSession.commit();
+            System.out.println("메뉴 정보 변경 성공!!!");
+        } else {
+            sqlSession.rollback();
+            System.out.println("메뉴 정보 변경 실패!!!");
+        }
+        sqlSession.close();
+
+    }
 }
