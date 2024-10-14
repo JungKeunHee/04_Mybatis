@@ -4,6 +4,7 @@ import model.dto.MenuDTO;
 import model.service.MenuService;
 import view.PrintView;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,17 +32,39 @@ public class MenuController {
 
     }
 
-    public void selectByMenuPrice(int price) {
+    public void selectByMenuPrice(Map<String, String> parameter) {
 
-        Map<String, Integer> map = new HashMap<>();
-        map.put("price", price);
+        int price = Integer.parseInt(parameter.get("price"));
 
-        List<MenuDTO> menuList = menuService.selectByMenuPrice(map);
+        MenuDTO selectPrice = new MenuDTO();
+        selectPrice.setMenuPrice(price);
 
-        if (menuList != null){
+        List<MenuDTO> menuList = menuService.selectByMenuPrice(selectPrice);
+
+        if (menuList != null && menuList.size() > 0){
             printView.selectMenuByPrice(menuList);
         } else {
             printView.selectAllError("selectMenuError");
+        }
+
+    }
+
+    public void insertMenu(Map<String, String> parameter) {
+
+        String menuName = parameter.get("menuName");
+        int menuPrice = Integer.parseInt(parameter.get("menuPrice"));
+        int categoryCode = Integer.parseInt(parameter.get("categoryCode"));
+
+        MenuDTO newMenu = new MenuDTO();
+
+        newMenu.setMenuName(menuName);
+        newMenu.setMenuPrice(menuPrice);
+        newMenu.setCategoryCode(categoryCode);
+
+        if(menuService.inputNewMenu(newMenu)){
+            printView.inputNewMenu();
+        } else {
+            printView.selectAllError("inputError");
         }
 
     }

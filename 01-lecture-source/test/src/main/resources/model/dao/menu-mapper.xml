@@ -21,19 +21,29 @@
 
     </select>
 
-    <select id="selectByMenuPrice" parameterType="hashmap" resultMap="MenuMapper">
+    <select id="selectByMenuPrice" parameterType="model.dto.MenuDTO" resultMap="MenuMapper">
         SELECT
             *
         FROM
             TBL_MENU
         WHERE
-            ORDERABLE_STATUS
-            <if test="price gte 0 and price lte 10000">
+            ORDERABLE_STATUS = 'Y'
+            <if test="menuPrice gte 0 and menuPrice lte 10000">
                 AND MENU_PRICE BETWEEN 0 AND #{menuPrice}
             </if>
-            <if test="price gt 10000 and price lte 20000">
-            AND MENU_PRICE BETWEEN 10000 AND #{menuPrice}
+            <if test="menuPrice gt 10000 and menuPrice lte 20000">
+                AND MENU_PRICE BETWEEN 10000 AND #{menuPrice}
             </if>
-
+            <if test="menuPrice gt 20000 and menuPrice lte 30000">
+                AND MENU_PRICE BETWEEN 20000 AND #{menuPrice}
+            </if>
+            <if test="menuPrice gt 30000">
+                AND MENU_PRICE BETWEEN 30000 AND #{menuPrice}
+            </if>
     </select>
+
+    <insert id="inputNewMenu" parameterType="model.dto.MenuDTO">
+        INSERT INTO TBL_MENU(MENU_NAME, MENU_PRICE, CATEGORY_CODE, ORDERABLE_STATUS)
+        VALUES(#{menuName} , #{menuPrice}, #{categoryCode}, 'Y')
+    </insert>
 </mapper>

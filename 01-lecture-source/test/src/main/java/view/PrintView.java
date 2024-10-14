@@ -1,5 +1,6 @@
 package view;
 
+import controller.MenuController;
 import model.dto.MenuDTO;
 
 import java.util.List;
@@ -31,5 +32,12 @@ public class PrintView {
         for (MenuDTO menuAllList : menuList){
             System.out.println(menuAllList);
         }
+    }
+
+    public void inputNewMenu() {
+        MenuController menuController = new MenuController();
+
+        menuController.selectAllMenu();
+        System.out.println("신규 메뉴가 추가 되었습니다");
     }
 }

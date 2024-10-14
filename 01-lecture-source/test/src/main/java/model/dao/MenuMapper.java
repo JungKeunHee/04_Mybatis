@@ -9,5 +9,7 @@ public interface MenuMapper {
 
     List<MenuDTO> selectAllMenu();
 
-    List<MenuDTO> selectByMenuPrice(Map<String, Integer> selectMenu);
+    List<MenuDTO> selectByMenuPrice(MenuDTO selectPrice);
+
+    int inputNewMenu(MenuDTO newMenu);
 }

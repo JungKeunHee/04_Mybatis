@@ -28,16 +28,32 @@ public class MenuService {
         return menuList;
     }
 
-    public List<MenuDTO> selectByMenuPrice(Map<String, Integer> map) {
+    public List<MenuDTO> selectByMenuPrice(MenuDTO selectPrice) {
 
         SqlSession sqlSession = getSqlSession();
 
         menuMapper = sqlSession.getMapper(MenuMapper.class);
 
-        List<MenuDTO> menuList = menuMapper.selectByMenuPrice(map);
+        List<MenuDTO> menuList = menuMapper.selectByMenuPrice(selectPrice);
 
         sqlSession.close();
 
         return menuList;
+    }
+
+    public boolean inputNewMenu(MenuDTO newMenu) {
+
+        SqlSession sqlSession = getSqlSession();
+
+        menuMapper = sqlSession.getMapper(MenuMapper.class);
+
+        int result = menuMapper.inputNewMenu(newMenu);
+
+        if (result > 0){
+            sqlSession.commit();
+        } else {
+            sqlSession.rollback();
+        }
+        return result > 0 ? true : false;
     }
 }
