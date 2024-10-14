@@ -68,4 +68,23 @@ public class MenuController {
         }
 
     }
+
+    public void modifyMenu(Map<String, String> modifyMenu) {
+
+        if(menuService.modifyMenu(modifyMenu)){
+            printView.successMenu("successModify");
+        } else {
+            printView.selectAllError("modifyError");
+        }
+
+    }
+
+    public void deleteMenu(Map<String, String> deleteMenu) {
+
+        if(menuService.deleteMenu(deleteMenu)){
+            printView.successMenu("successDelete");
+        } else {
+            printView.selectAllError("deleteError");
+        }
+    }
 }

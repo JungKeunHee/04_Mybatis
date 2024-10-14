@@ -12,4 +12,8 @@ public interface MenuMapper {
     List<MenuDTO> selectByMenuPrice(MenuDTO selectPrice);
 
     int inputNewMenu(MenuDTO newMenu);
+
+    int modifyMenu(Map<String, String> updateMenu);
+
+    int deleteMenu(Map<String, String> deleteMenu);
 }

@@ -56,4 +56,37 @@ public class MenuService {
         }
         return result > 0 ? true : false;
     }
+
+    public boolean modifyMenu(Map<String, String> updateMenu) {
+
+        SqlSession sqlSession = getSqlSession();
+
+        menuMapper = sqlSession.getMapper(MenuMapper.class);
+
+        int result = menuMapper.modifyMenu(updateMenu);
+
+        if (result > 0){
+            sqlSession.commit();
+        } else {
+            sqlSession.rollback();
+        }
+        return result > 0 ? true : false;
+
+    }
+
+    public boolean deleteMenu(Map<String, String> deleteMenu) {
+
+        SqlSession sqlSession = getSqlSession();
+
+        menuMapper = sqlSession.getMapper(MenuMapper.class);
+
+        int result = menuMapper.deleteMenu(deleteMenu);
+
+        if (result > 0){
+            sqlSession.commit();
+        } else {
+            sqlSession.rollback();
+        }
+        return result > 0 ? true : false;
+    }
 }

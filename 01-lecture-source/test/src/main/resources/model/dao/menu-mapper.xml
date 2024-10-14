@@ -21,7 +21,7 @@
 
     </select>
 
-    <select id="selectByMenuPrice" parameterType="model.dto.MenuDTO" resultMap="MenuMapper">
+    <select id="selectByMenuPrice" parameterType="MenuDTO" resultMap="MenuMapper">
         SELECT
             *
         FROM
@@ -42,8 +42,33 @@
             </if>
     </select>
 
-    <insert id="inputNewMenu" parameterType="model.dto.MenuDTO">
+    <insert id="inputNewMenu" parameterType="MenuDTO">
         INSERT INTO TBL_MENU(MENU_NAME, MENU_PRICE, CATEGORY_CODE, ORDERABLE_STATUS)
         VALUES(#{menuName} , #{menuPrice}, #{categoryCode}, 'Y')
     </insert>
+
+    <update id="modifyMenu" parameterType="hashmap">
+        UPDATE TBL_MENU
+        <trim prefix="SET" prefixOverrides=",">
+            <if test="menuName != null and menuName != ''">
+                MENU_NAME = #{menuName}
+            </if>
+            <if test="menuPrice != null and menuPrice != ''">
+                , MENU_PRICE = #{menuPrice}
+            </if>
+            <if test="categoryCode != null and categoryCode != ''">
+                , CATEGORY_CODE = #{categoryCode}
+            </if>
+            <if test="orderableStatus != null and orderableStatus != ''">
+                , ORDERABLE_STATUS = #{orderableStatus}
+            </if>
+        </trim>
+        WHERE
+            MENU_CODE = #{menuCode}
+    </update>
+
+    <delete id="deleteMenu" parameterType="hashmap">
+        DELETE FROM TBL_MENU
+        WHERE MENU_CODE = #{menuCode}
+    </delete>
 </mapper>

@@ -24,6 +24,12 @@ public class PrintView {
             case "selectMenuError":
                 System.out.println("메뉴 조회에 실패하였습니다...");
                 break;
+            case "modifyError":
+                System.out.println("메뉴 수정에 실패하였습니다...");
+                break;
+            case "deleteError":
+                System.out.println("메뉴 삭제에 실패하였습니다...");
+                break;
         }
 
     }
@@ -39,5 +45,22 @@ public class PrintView {
 
         menuController.selectAllMenu();
         System.out.println("신규 메뉴가 추가 되었습니다");
+    }
+
+    public void successMenu(String successMessage) {
+
+        MenuController menuController = new MenuController();
+
+        switch (successMessage){
+            case "successModify":
+                menuController.selectAllMenu();
+                System.out.println("메뉴 수정 완료!!!");
+                break;
+            case "successDelete":
+                menuController.selectAllMenu();
+                System.out.println("메뉴 삭제 성공!!!");
+                break;
+        }
+
     }
 }
