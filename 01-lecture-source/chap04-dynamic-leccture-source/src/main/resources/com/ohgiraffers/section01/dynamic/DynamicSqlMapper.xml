@@ -149,7 +149,7 @@
             *
         FROM
             TBL_MENU
-        <if test="condition != null and condition eq 'menuCode'">
+        <if test="value != null">
             <where>
                 MENU_CODE = #{value}
             </where>
