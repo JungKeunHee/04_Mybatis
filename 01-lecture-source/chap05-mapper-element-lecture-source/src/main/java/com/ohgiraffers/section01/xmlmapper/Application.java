@@ -15,7 +15,6 @@ public class Application {
             System.out.println("1. <cache> 테스트");
             System.out.println("2. <resultMap> 서브 메뉴");
             System.out.println("3. <sql> 테스트");
-            System.out.println("4. <insert> 서브 메뉴");
             System.out.print("원하시는 메뉴를 골라주세요 : ");
             int no = sc.nextInt();
 
@@ -27,8 +26,7 @@ public class Application {
                     resultMapSubMenu();
                     break;
                 case 3:
-                    break;
-                case 4:
+                    elementService.sqlTest();
                     break;
                 default:
                     System.out.println("메뉴 번호를 알맞게 입력해주세요...");
@@ -66,6 +64,7 @@ public class Application {
                     elementService.selectResultMapAssociation();
                     break;
                 case 4:
+                    elementService.selectResultMapCollection();
                     break;
                 default:
                     System.out.println("메뉴에 맞는 번호를 입력해주세요...");

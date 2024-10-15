@@ -20,10 +20,11 @@
             - 캐시란 ? 데이터나 값을 미리 복사해둔 임시의 장소를 의미한다
             - 동일한 값을 DB 에서 꺼내오는 과정을 생략하고 싶을 때 사용한다.
             - 캐시 설정은 많이 반복 될 작업에 적용하는 것이 효과적이다.
+            - 캐시 설정에서 벗어나고 싶은 경우 useCache=false 를 사용하면 된다.
      -->
     <cache eviction="LRU" flushInterval="1000" size="512" readOnly="true"/>
 
-    <select id="selectCacheTest" resultType="java.lang.String">
+    <select id="selectCacheTest" resultType="java.lang.String" useCache="false">
         SELECT
             MENU_NAME
         FROM
@@ -95,17 +96,32 @@
             resultMap 을 구성하는 방법 1. 따로 만든 result 이용
     -->
 
-    <resultMap id="categoryResultMap" type="com.ohgiraffers.common.CategoryDTO">
-        <id property="code" column="CATEGORY_CODE"/>
-        <result property="name" column="CATEGORY_NAME"/>
-        <result property="refCategoryCode" column="REF_CATEGORY_CODE"/>
-    </resultMap>
+<!--    <resultMap id="categoryResultMap" type="com.ohgiraffers.common.CategoryDTO">-->
+<!--        <id property="code" column="CATEGORY_CODE"/>-->
+<!--        <result property="name" column="CATEGORY_NAME"/>-->
+<!--        <result property="refCategoryCode" column="REF_CATEGORY_CODE"/>-->
+<!--    </resultMap>-->
+<!--    <resultMap id="menuAndCategoryResultMap" type="com.ohgiraffers.common.MenuAndCategoryDTO">-->
+<!--        <id property="code" column="MENU_CODE"/>-->
+<!--        <result property="name" column="MENU_NAME"/>-->
+<!--        <result property="price" column="MENU_PRICE"/>-->
+<!--        <result property="orderableStatus" column="ORDERABLE_STATUS"/>-->
+<!--        <association property="categoryDTO" resultMap="categoryResultMap"/>-->
+<!--    </resultMap>-->
+
+    <!-- comment. association
+            resultMap 을 구성하는 방법 2. association 내부에 id 와 result 이용
+     -->
     <resultMap id="menuAndCategoryResultMap" type="com.ohgiraffers.common.MenuAndCategoryDTO">
         <id property="code" column="MENU_CODE"/>
         <result property="name" column="MENU_NAME"/>
         <result property="price" column="MENU_PRICE"/>
         <result property="orderableStatus" column="ORDERABLE_STATUS"/>
-        <association property="categoryDTO" resultMap="categoryResultMap"/>
+        <association property="categoryDTO" javaType="com.ohgiraffers.common.CategoryDTO">
+            <id property="code" column="CATEGORY_CODE"/>
+            <result property="name" column="CATEGORY_NAME"/>
+            <result property="refCategoryCode" column="REF_CATEGORY_CODE"/>
+        </association>
     </resultMap>
 
     <select id="selectResultMapAssociationTest" resultMap="menuAndCategoryResultMap">
@@ -122,6 +138,56 @@
             JOIN TBL_CATEGORY B ON (A.CATEGORY_CODE = B.CATEGORY_CODE)
         WHERE
             A.ORDERABLE_STATUS = 'Y'
+    </select>
+    
+    <resultMap id="categoryAndMenuResultMap" type="com.ohgiraffers.common.CategoryAndMenuDTO">
+        <id property="code" column="CATEGORY_CODE"/>
+        <result property="name" column="CATEGORY_NAME"/>
+        <result property="refCategoryCode" column="REF_CATEGORY_CODE"/>
+        <collection property="menuList" ofType="com.ohgiraffers.common.MenuDTO">
+            <id property="code" column="MENU_CODE"/>
+            <result property="name" column="MENU_NAME"/>
+            <result property="price" column="MENU_PRICE"/>
+            <result property="categoryCode" column="CATEGORY_CODE"/>
+            <result property="orderableStatus" column="ORDERABLE_STATUS"/>
+        </collection>
+    </resultMap>
+    
+    <select id="selectResultMapCollectionTest" resultMap="categoryAndMenuResultMap">
+        SELECT
+            A.CATEGORY_CODE,
+            A.CATEGORY_NAME,
+            A.REF_CATEGORY_CODE,
+            B.MENU_CODE,
+            B.MENU_NAME,
+            B.MENU_PRICE,
+            B.CATEGORY_CODE,
+            B.ORDERABlE_STATUS
+        FROM
+            TBL_CATEGORY A
+        LEFT JOIN
+            TBL_MENU B ON (A.CATEGORY_CODE = B.CATEGORY_CODE)
+        ORDER BY
+            A.CATEGORY_CODE
+    </select>
+
+    <!-- comment.
+            <sql> 각 매핑 구문에서 공통적으로 사용할 수 있는
+            SQL 문자열의 일부를 정의하고 필요시 재사용하기 위한 목적
+     -->
+    <sql id="menuColumn">
+        MENU_CODE,
+        MENU_NAME,
+        MENU_PRICE,
+        CATEGORY_CODE,
+        ORDERABLE_STATUS
+    </sql>
+
+    <select id="selectSqlTest" resultMap="menuResultMap2">
+        SELECT
+            <include refid="menuColumn"/>
+        FROM
+            TBL_MENU
     </select>
 
 </mapper>
