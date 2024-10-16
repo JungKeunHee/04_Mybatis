@@ -105,17 +105,17 @@
             TBL_MENU
         WHERE
             ORDERABLE_STATUS = 'Y'
-            <choose>
-                <when test="value == '식사'">
-                    AND CATEGORY_CODE IN(1, 4, 5)
-                </when>
-                <when test="value == '음료'">
-                    AND CATEGORY_CODE IN(2)
-                </when>
-                <otherwise>
-                    AND CATEGORY_CODE IN(3)
-                </otherwise>
-            </choose>
+        <choose>
+            <when test="value == '식사'">
+                AND CATEGORY_CODE IN(1, 4, 5)
+            </when>
+            <when test="value == '음료'">
+                AND CATEGORY_CODE IN(2)
+            </when>
+            <otherwise>
+                AND CATEGORY_CODE IN(3)
+            </otherwise>
+        </choose>
         ORDER BY
             MENU_CODE
 

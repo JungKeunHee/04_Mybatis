@@ -12,13 +12,12 @@
         <result property="categoryCode" column="CATEGORY_CODE"/>
         <result property="orderableStatus" column="ORDERABLE_STATUS"/>
     </resultMap>
-    
+
     <select id="selectAllMenu" resultMap="MenuMapper">
         SELECT
             *
         FROM
             TBL_MENU
-
     </select>
 
     <select id="selectByMenuPrice" parameterType="MenuDTO" resultMap="MenuMapper">
